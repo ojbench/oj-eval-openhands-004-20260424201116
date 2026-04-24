@@ -699,7 +699,7 @@ public:
         }
         
         string isbn = selectedBooks[stackIdx];
-        Book& b = books[isbn];
+        Book b = books[isbn];
         
         string newISBN = "";
         string newName = "";
@@ -831,24 +831,28 @@ public:
         }
         
         if (!newISBN.empty()) {
-            books.erase(isbn);
             strcpy(b.ISBN, newISBN.c_str());
-            books[newISBN] = b;
-            selectedBooks[stackIdx] = newISBN;
+            isbn = newISBN;
         }
         
         if (!newName.empty()) {
-            strcpy(books[selectedBooks[stackIdx]].bookName, newName.c_str());
+            strcpy(b.bookName, newName.c_str());
         }
         if (!newAuthor.empty()) {
-            strcpy(books[selectedBooks[stackIdx]].author, newAuthor.c_str());
+            strcpy(b.author, newAuthor.c_str());
         }
         if (!newKeyword.empty()) {
-            strcpy(books[selectedBooks[stackIdx]].keyword, newKeyword.c_str());
+            strcpy(b.keyword, newKeyword.c_str());
         }
         if (newPrice >= 0) {
-            books[selectedBooks[stackIdx]].price = newPrice;
+            b.price = newPrice;
         }
+        
+        if (!newISBN.empty()) {
+            books.erase(selectedBooks[stackIdx]);
+            selectedBooks[stackIdx] = isbn;
+        }
+        books[isbn] = b;
         
         addLog("modify");
     }
