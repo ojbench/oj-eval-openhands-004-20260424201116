@@ -1,0 +1,5 @@
+su root sjtu
+select 978-1-972437-83-4
+modify -name="lime" -author="MonicaZavala" -keyword="withheld|lordosis|Watkins" -price=83.16
+show -ISBN=978-1-972437-83-4
+exit
